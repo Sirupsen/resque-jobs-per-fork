@@ -53,7 +53,7 @@ module Resque
           break unless job
 
           working_on job
-          procline "Processing #{job.queue} since #{Time.now.to_i}"
+          procline "Processing #{job.queue} since #{Time.now.to_i} [#{job.payload_class_name}]"
         end
 
         perform_without_jobs_per_fork(job)
