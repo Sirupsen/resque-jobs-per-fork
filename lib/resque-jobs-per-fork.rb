@@ -44,7 +44,6 @@ module Resque
       run_hook :before_perform_jobs_per_fork, self
 
       jobs_per_fork.times do |attempts|
-        break if shutdown? || paused?
 
         if attempts > 0
           # Attempt to reserve another job
@@ -59,6 +58,7 @@ module Resque
 
         perform_without_jobs_per_fork(job)
         processed!
+        break if shutdown? || paused?
       end
 
       run_hook :after_perform_jobs_per_fork, self
